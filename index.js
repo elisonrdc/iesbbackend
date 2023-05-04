@@ -40,7 +40,16 @@ app.post('/usuario', async (request, response) => {
     const { nome, login, senha, data_nascimento } = request.body
     await pool.query('INSERT INTO usuario (nome, login, senha, data_nascimento) VALUES ($1, $2, $3, $4) RETURNING id', [nome, login, await hashPassword(senha), data_nascimento], (error, results) => {
         if (error) { throw error }
-        response.status(201).send(`Usuário adicionado! ID: ${results.rows[0].id}`)
+        response.status(201).send(`Usuário adicionado com sucesso! ID: ${results.rows[0].id}`)
+    })
+})
+
+app.put('/usuario/:id', async (request, response) => {
+    const id = parseInt(request.params.id)
+    const { nome, senha, data_nascimento } = request.body
+    await pool.query('UPDATE usuario SET nome = $1, senha = $2, data_nascimento = $3 WHERE id = $4', [nome, await hashPassword(senha), data_nascimento, id], (error, results) => {
+        if (error) { throw error }
+        response.status(200).send(`Usuário atualizado com sucesso! ID: ${id}`)
     })
 })
 
