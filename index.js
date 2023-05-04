@@ -53,6 +53,14 @@ app.put('/usuario/:id', async (request, response) => {
     })
 })
 
+app.delete('/usuario/:id', async (request, response) => {
+    const id = parseInt(request.params.id)
+    await pool.query('DELETE FROM usuario WHERE id = $1', [id], (error, results) => {
+        if (error) { throw error }
+        response.status(200).send(`Usuário deletado com sucesso! ID: ${id}`)
+    })
+})
+
 async function hashPassword(password) {
     return await bcrypt.hash(password, 10);
 }
