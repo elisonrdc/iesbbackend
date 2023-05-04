@@ -22,6 +22,14 @@ app.get('/usuarios', async (request, response) => {
     })
 })
 
+app.get('/usuario/:id', async (request, response) => {
+    const id = parseInt(request.params.id)
+    await pool.query('SELECT * FROM usuario WHERE id = $1', [id], (error, results) => {
+        if (error) { throw error }
+        response.status(200).json(results.rows)
+    })
+})
+
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`)
 })
