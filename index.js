@@ -11,6 +11,12 @@ const pool = new Pool({
     port: 5432,
 })
 
+const bodyParser = require('body-parser')
+const bcrypt = require('bcrypt')
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
+
 app.get('/', async (request, response) => {
     await response.send('Hello World!')
 })
@@ -29,6 +35,22 @@ app.get('/usuario/:id', async (request, response) => {
         response.status(200).json(results.rows)
     })
 })
+
+app.post('/usuario', async (request, response) => {
+    const { nome, login, senha, data_nascimento } = request.body
+    await pool.query('INSERT INTO usuario (nome, login, senha, data_nascimento) VALUES ($1, $2, $3, $4) RETURNING id', [nome, login, await hashPassword(senha), data_nascimento], (error, results) => {
+        if (error) { throw error }
+        response.status(201).send(`Usuário adicionado! ID: ${results.rows[0].id}`)
+    })
+})
+
+async function hashPassword(password) {
+    return await bcrypt.hash(password, 10);
+}
+
+async function comparePassword(password, hash) {
+    return await bcrypt.compare(password, hash);
+}
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`)
