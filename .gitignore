@@ -3,3 +3,5 @@
 
 # netbeans project files
 nbproject
+
+/node_modules/
