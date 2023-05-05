@@ -7,7 +7,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.get('/', async (request, response) => {
-    await response.send('Hello World!')
+  await response.send('Hello World!')
 })
 
 const usuario = require('./usuario')
@@ -18,5 +18,5 @@ app.put('/usuario/:id', usuario.alterarUsuario)
 app.delete('/usuario/:id', usuario.deletarUsuario)
 
 app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`)
+  console.log(`Servidor rodando na porta ${port}`)
 })
