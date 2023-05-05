@@ -1,12 +1,12 @@
 ## Descrição
 
-O projeto iesbbackend tem como finalidade a criação de um CRUD com express para avaliação final da disciplina "Desenvolvimento de Backend" do IESB NORTE, em Brasília/DF.
+O projeto iesbbackend tem como finalidade a criação de um CRUD com express para avaliação final da disciplina "Desenvolvimento de Backend", da Pós-graduação em Aplicativos Móveis do IESB NORTE, em Brasília/DF.
 
 ## Instalação
 
 `npm install`
 
-## PostgreSQL
+## PostgreSQL (Estrutura)
 
 ```
 CREATE ROLE elison WITH LOGIN CREATEDB PASSWORD '123@mudar';
