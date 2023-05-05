@@ -2,7 +2,7 @@ const pool = require('./pool')
 const bcrypt = require('./bcrypt')
 
 const retornaUsuarios = async (request, response) => {
-  await pool.query('SELECT * FROM usuario', (error, results) => {
+  await pool.query('SELECT id, nome, login, data_nascimento FROM usuario', (error, results) => {
     if (error) { throw error }
     response.status(200).json(results.rows)
   })
@@ -10,7 +10,7 @@ const retornaUsuarios = async (request, response) => {
 
 const retornaUsuario = async (request, response) => {
   const id = parseInt(request.params.id)
-  await pool.query('SELECT * FROM usuario WHERE id = $1', [id], (error, results) => {
+  await pool.query('SELECT id, nome, login, data_nascimento FROM usuario WHERE id = $1', [id], (error, results) => {
     if (error) { throw error }
     response.status(200).json(results.rows)
   })
